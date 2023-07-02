@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hotel Booking Registration Form</title>
+    <link rel="stylesheet" href="style1.css" />
+  </head>
+  <body>
+    <h1>Hotel Booking Registration</h1>
+
+    <form id="bookingForm">
+      <h2>Customer Info</h2>
+      <label for="customerName">Customer Name:</label>
+      <input type="text" id="customerName" required /><br />
+
+      <label for="checkInDate">Check-in Date:</label>
+      <input type="date" id="checkInDate" required /><br />
+
+      <label for="totalDays">Total No of Days:</label>
+      <input type="number" id="totalDays" required /><br />
+
+      <label for="totalPersons">Total No of Persons:</label>
+      <input type="number" id="totalPersons" required /><br />
+
+      <h2>Room Information</h2>
+      <label for="roomType">Room Type:</label>
+      <select id="roomType">
+        <option value="delux">Delux Room</option>
+        <option value="suite">Suite Room</option></select
+      ><br />
+
+      <label for="amenities">Amenities:</label>
+      <div class="form-group">
+        <div class="checkbox" id="amenities">
+          <img
+            class="AC"
+            src="WhatsApp Image 2023-07-02 at 22.10.20.jpg"
+            alt="AC"
+          />
+          <label
+            ><input type="checkbox" name="amenities" value="ac" /> AC</label
+          >
+        </div>
+        <div class="checkbox">
+          <img
+            class="locker"
+            src="WhatsApp Image 2023-07-02 at 22.10.21.jpg"
+            alt="lockers"
+          />
+          <label class="box">
+            <input type="checkbox" name="amenities" value="Locker" />
+            Locker</label
+          >
+        </div>
+      </div>
+      ><br />
+
+      <h2>Advance Payment</h2>
+      <label for="advanceAmount">Advance Amount:</label>
+      <input type="number" id="advanceAmount" required /><br />
+
+      <h2>Total Cost Calculation</h2>
+      <label for="totalRoomCost">Total Room Cost:</label>
+      <input type="text" id="totalRoomCost" readonly /><br />
+
+      <label for="totalAmenitiesCost">Total Amenities Cost:</label>
+      <input type="text" id="totalAmenitiesCost" readonly /><br />
+
+      <label for="totalCost">Total Cost:</label>
+      <input type="text" id="totalCost" readonly /><br />
+
+      <h2>Additional Charges</h2>
+      <label for="extraPersons">Extra Persons:</label>
+      <input type="number" id="extraPersons" /><br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      // Add your JavaScript code here
+      const bookingForm = document.getElementById("bookingForm");
+
+      bookingForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Get form values
+        const customerName = document.getElementById("customerName").value;
+        const checkInDate = document.getElementById("checkInDate").value;
+        const totalDays = parseInt(document.getElementById("totalDays").value);
+        const totalPersons = parseInt(
+          document.getElementById("totalPersons").value
+        );
+        const roomType = document.getElementById("roomType").value;
+        const amenities = document.getElementById("amenities").value;
+        const advanceAmount = parseInt(
+          document.getElementById("advanceAmount").value
+        );
+        const extraPersons =
+          parseInt(document.getElementById("extraPersons").value) || 0;
+
+        // Calculate costs
+        const roomRate = roomType === "delux" ? 2500 : 4000;
+        const amenitiesCost =
+          (amenities === "ac" ? 1000 : 0) + (amenities === "locker" ? 300 : 0);
+        const totalRoomCost = roomRate * totalDays;
+        const totalAmenitiesCost = amenitiesCost * totalDays;
+        const totalCost = totalRoomCost + totalAmenitiesCost;
+        const balance = totalCost - advanceAmount;
+
+        // Display results
+        document.getElementById("totalRoomCost").value = totalRoomCost + "/-";
+        document.getElementById("totalAmenitiesCost").value =
+          totalAmenitiesCost + "/-";
+        document.getElementById("totalCost").value = totalCost + "/-";
+
+        // Additional Charges
+        const extraPersonCost =
+          totalPersons > 2 ? extraPersons * 1000 * totalDays : 0;
+        console.log(
+          "Additional Charges for extra persons: " + extraPersonCost + "/-"
+        );
+      });
+    </script>
+  </body>
+</html>
